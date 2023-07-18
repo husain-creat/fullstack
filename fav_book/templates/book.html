@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="nav-container">
+        <h2>CODING DOJO WALL</h2>
+        <div>
+            <p>welcome {{first_name}} {{last_name}}</p>
+            <a href="#">log-out</a>
+        </div>
+    </nav>
+    <hr>
+
+
+    <h2>add your favorite book</h2>
+    <form method="POST" action="/add_book">
+        {% csrf_token %}
+        <table>
+            <tr><td>Title:</td><td><input type="text" name="title"></td></tr>
+                    <tr><td>description:</td><td><textarea name="desc" cols="30" rows="10"></textarea></td></tr>
+                    <tr><td><input type="submit" value="add"></td></tr>
+        </table>
+        <p> All books</p>
+        {% for book in books%}
+        <li><a href="{% url 'details' id=book.id%}">{{book.title}}</a></li>
+        <li><p>added by  ({{ book.uploaded_by.first_name }} {{ book.uploaded_by.last_name }})</p></li>
+        {% endfor%}
+
+</body>
+</html>
